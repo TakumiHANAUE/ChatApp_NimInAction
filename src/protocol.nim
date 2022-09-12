@@ -10,6 +10,7 @@ proc parseMessage*(data: string): Message =
     result.message = dataJson["message"].getStr()
 
 when isMainModule:
+    # Test for parseMessage
     block:
         let data = """{"username": "John", "message": "Hi!"}"""
         let parsed = parseMessage(data)
@@ -18,7 +19,7 @@ when isMainModule:
     block:
         let data = """foobar"""
         try:
-            let parsed = parseJson(data)
+            let parsed = parseMessage(data)
             doAssert false
         except JsonParsingError:
             doAssert true
