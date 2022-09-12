@@ -9,6 +9,12 @@ proc parseMessage*(data: string): Message =
     result.username = dataJson["username"].getStr()
     result.message = dataJson["message"].getStr()
 
+proc createMessage*(username, message: string): string =
+    result = $(%{
+        "username": %username,
+        "message": %message
+    }) & "\c\l"
+
 when isMainModule:
     # Test for parseMessage
     block:
@@ -25,4 +31,8 @@ when isMainModule:
             doAssert true
         except:
             doAssert false
+    # Test for createMessage
+    block:
+        let expected = """{"username":"dom","message":"hello"}""" & "\c\l"
+        doAssert createMessage("dom", "hello") == expected
     echo("All tests passed!")
